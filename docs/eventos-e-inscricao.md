@@ -66,7 +66,9 @@ O desenho do site no celular (`src/app/(app)/(menu)/_layout.tsx`, com o
   (a primária `#1C0F4D` no claro, `#1E293B` no escuro) com o fio claro embaixo;
   à esquerda o ☰, que abre o menu, e a marca "**ICCV** Eventos"; à direita a
   pastilha de vidro com o sininho, a troca de tema (claro/escuro, guardada no
-  aparelho e aplicada por `Appearance.setColorScheme`, `src/lib/tema.ts`) e o
+  aparelho; a escolha fica em `src/lib/tema.ts` e o `useColorScheme` do
+  projeto lê dela antes do tema do sistema — `Appearance.setColorScheme` só é
+  chamado onde existe, porque não existe em todo ambiente) e o
   avatar, que abre o menu da conta: nome, e-mail, "Meu perfil" e "Sair". As
   telas que abrem por cima (evento, ingresso, perfil…) usam a mesma barra, com
   o título e a seta de voltar.
