@@ -39,3 +39,11 @@ Docs: https://docs.expo.dev/eas/index.md
 - If `ios/` and `android/` directories do not exist, they are generated (Continuous Native Generation). Never create or edit them by hand — configure native behavior in `app.json` and config plugins.
 - Expo Go only includes its bundled native modules. After adding a library with native code, the app needs a development build: `npx expo run:ios|android` locally, or `eas build --profile development`.
 - Prefer recommended Expo modules over third-party libraries, and check your available skills before adding dependencies. Docs: https://docs.expo.dev/versions/latest/index.md
+
+## Este projeto (ICCV Eventos)
+
+- É a **área do usuário** do ICCV no celular. O painel do admin fica só no site (`../ic-front`).
+- **Não cria rotas no backend** (`../ic-backend`): consome só as que o site já usa. Se a API não dá algo, a tela se adapta e a limitação vai para `docs/`.
+- O backend recusa campo a mais no corpo (`forbidNonWhitelisted`): mande só os campos do DTO.
+- Toda mudança atualiza o `.md` do módulo em `docs/` (índice em `docs/README.md`).
+- Antes de entregar: `npx tsc --noEmit`, `npx expo lint`, `npm run verificar`.

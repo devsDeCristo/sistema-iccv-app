@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "ic-app",
+    "name": "ICCV Eventos",
     "slug": "ic-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -20,17 +20,27 @@
       "predictiveBackGestureEnabled": false
     },
     "web": {
-      "output": "server",
+      "output": "single",
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
+      "expo-secure-store",
+      "expo-sharing",
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#208AEF",
+          "backgroundColor": "#1C0F4D",
           "image": "./assets/images/splash-icon.png",
           "imageWidth": 76
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O app usa a galeria para você escolher a foto do seu perfil.",
+          "cameraPermission": "O app usa a câmera para você tirar a foto do seu perfil.",
+          "microphonePermission": false
         }
       ]
     ],
