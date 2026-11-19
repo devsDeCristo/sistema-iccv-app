@@ -1,60 +1,44 @@
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { router, Stack } from 'expo-router';
-import { Alert, View } from 'react-native';
+import { View } from 'react-native';
 
 import { Botao, Cartao, Carregando, Falha, T, Tela, Vazio } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
 import { api } from '@/lib/api';
+import { destino, useAvisos } from '@/lib/avisos';
 import { tempoDesde } from '@/lib/formato';
 import { queryClient } from '@/lib/sessao';
 import type { Notificacao } from '@/lib/tipos';
 
-/** Para onde cada aviso leva no app; os do painel da igreja ficam no site */
-function destino(n: Notificacao): string | null {
-  switch (n.tipo) {
-    case 'EVENT':
-      return n.origemId ? `/evento/${n.origemId}` : '/';
-    case 'NEWS':
-    case 'MEMBERSHIP_ANSWERED':
-      return '/';
-    case 'CHURCH_REQUEST_ANSWERED':
-      return '/solicitacoes';
-    default:
-      return null;
-  }
-}
-
-/** Os 30 avisos mais recentes. Tocar marca aquele como lido e abre o assunto */
+/**
+ * Os avisos do usuário (os do painel da igreja ficam no site; ver
+ * `src/lib/avisos.ts`). Tocar marca aquele como lido e abre o assunto.
+ */
 export default function Avisos() {
   const cores = useTheme();
-  const avisos = useQuery({ queryKey: ['notificacoes'], queryFn: () => api<Notificacao[]>('/notificacoes') });
+  const avisos = useAvisos();
 
   const marcar = useMutation({
-    // sem `ids` marca todos; lista vazia o servidor recusa
-    mutationFn: (ids?: string[]) => api('/notificacoes/lidas', { method: 'POST', body: ids ? { ids } : {} }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['notificacoes'] });
-      queryClient.invalidateQueries({ queryKey: ['nao-lidas'] });
-    },
+    // sempre com `ids`: sem eles o servidor marcaria também os do painel, que o app não mostra
+    mutationFn: (ids: string[]) => api('/notificacoes/lidas', { method: 'POST', body: { ids } }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notificacoes'] }),
   });
 
   const abrir = (n: Notificacao) => {
     if (!n.lida) marcar.mutate([n.id]);
-    const rota = destino(n);
-    if (rota) router.navigate(rota as never);
-    else Alert.alert(n.titulo, `${n.texto}\n\nEste assunto é do painel da igreja: abra pelo site.`);
+    router.navigate(destino(n) as never);
   };
 
   if (avisos.isPending) return <Carregando />;
   if (avisos.isError) return <Falha erro={avisos.error} aoTentar={avisos.refetch} />;
-  const temNaoLida = avisos.data.some((n) => !n.lida);
+  const naoLidas = avisos.data.filter((n) => !n.lida).map((n) => n.id);
 
   return (
     <>
       <Stack.Screen options={{ title: 'Avisos' }} />
       <Tela aoAtualizar={() => avisos.refetch()} atualizando={avisos.isRefetching}>
-        {temNaoLida && (
-          <Botao titulo="Marcar todas como lidas" variante="texto" icone="done-all" onPress={() => marcar.mutate(undefined)} />
+        {naoLidas.length > 0 && (
+          <Botao titulo="Marcar todas como lidas" variante="texto" icone="done-all" onPress={() => marcar.mutate(naoLidas)} />
         )}
         {avisos.data.length === 0 && <Vazio icone="notifications-none" texto="Nenhum aviso por aqui." />}
         {avisos.data.map((n) => (

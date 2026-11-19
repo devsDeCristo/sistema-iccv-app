@@ -23,16 +23,22 @@ plano (`memberChurch.modulos` do `/auth/validate`); ver
 - **Senha:** `POST /auth/password/change` `{currentPassword, password}` (8 a
   72, diferente da atual). Outras sessões não caem.
 
-## Avisos (`src/app/(app)/notificacoes.tsx`, sininho em `src/components/barra-do-topo.tsx`)
+## Avisos (`src/app/(app)/notificacoes.tsx`, regra em `src/lib/avisos.ts`)
 
-- Sininho na pastilha da barra do topo: `GET /notificacoes/nao-lidas` a cada minuto.
-- Lista: `GET /notificacoes` (os 30 mais recentes). Tocar marca aquele como
-  lido (`POST /notificacoes/lidas` `{ids}`) e abre o assunto: evento →
-  página do evento; notícia e resposta de membro → Início; resposta de
-  solicitação → Solicitações. Os avisos do painel da igreja (pedido de membro,
-  solicitação nova) mostram o texto e dizem para abrir pelo site.
-  "Marcar todas como lidas" manda `{}` (sem `ids`; lista vazia o servidor
-  recusa).
+- **Só os avisos do usuário comum** (`TIPOS_DO_APP`): evento, notícia,
+  resposta do pedido de membro e resposta de solicitação. Os do painel da
+  igreja (pedido de membro, solicitação nova, solicitação aguardando) ficam no
+  site: o app não mostra, não conta e não manda push deles. Decisão de
+  19/11/2026.
+- Lista: `GET /notificacoes` (os 30 mais recentes), filtrada pelos tipos do
+  app. Tocar marca aquele como lido (`POST /notificacoes/lidas` `{ids}`) e
+  abre o assunto: evento → página do evento; notícia e resposta de membro →
+  Início; resposta de solicitação → Solicitações.
+- "Marcar todas como lidas" manda os `ids` dos não lidos da lista — nunca
+  `{}`, que marcaria também os do painel, que o app não mostra.
+- Sininho (na pastilha da barra do topo): conta os não lidos da mesma lista, a
+  cada minuto. Não usa `GET /notificacoes/nao-lidas`, que soma também os do
+  painel. Limite: conta só entre os 30 mais recentes.
 
 ## Notícias (`src/app/(app)/noticia/[id].tsx`)
 

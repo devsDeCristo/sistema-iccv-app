@@ -1,5 +1,4 @@
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useState } from 'react';
@@ -9,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BARRA } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
-import { api } from '@/lib/api';
+import { useAvisos } from '@/lib/avisos';
 import { iniciais } from '@/lib/formato';
 import { useSessao, useUsuario } from '@/lib/sessao';
 import { alternarTema } from '@/lib/tema';
@@ -63,14 +62,11 @@ function Avatar({ nome, foto, tamanho }: { nome?: string; foto?: string | null; 
   );
 }
 
-/** O sininho: avisos não lidos, consultados a cada minuto */
+/** O sininho: avisos do app não lidos, consultados a cada minuto */
 function Sininho() {
-  const { data } = useQuery({
-    queryKey: ['nao-lidas'],
-    queryFn: () => api<{ naoLidas: number }>('/notificacoes/nao-lidas'),
-    refetchInterval: 60_000,
-  });
-  const n = data?.naoLidas ?? 0;
+  // só os avisos do app (os do painel da igreja ficam no site), a cada minuto
+  const { data } = useAvisos({ refetchInterval: 60_000 });
+  const n = data?.filter((aviso) => !aviso.lida).length ?? 0;
   return (
     <Pressable
       accessibilityRole="button"
