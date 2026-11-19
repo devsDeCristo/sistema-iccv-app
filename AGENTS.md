@@ -46,4 +46,5 @@ Docs: https://docs.expo.dev/eas/index.md
 - **Não cria rotas no backend** (`../ic-backend`): consome só as que o site já usa. Se a API não dá algo, a tela se adapta e a limitação vai para `docs/`.
 - O backend recusa campo a mais no corpo (`forbidNonWhitelisted`): mande só os campos do DTO.
 - Toda mudança atualiza o `.md` do módulo em `docs/` (índice em `docs/README.md`).
+- **O Expo é só ferramenta de desenvolvimento.** Não usar os serviços dele (EAS Build, EAS Submit, EAS Update, Expo Push, credenciais no Expo), apesar do que a seção "Building with EAS" acima sugere. Build é local (`npx expo prebuild` + Android Studio/Gradle ou Xcode); push vai direto pelo Firebase (FCM) do projeto Firebase do app, enviado pelo backend.
 - Antes de entregar: `npx tsc --noEmit`, `npx expo lint`, `yarn verificar`.
