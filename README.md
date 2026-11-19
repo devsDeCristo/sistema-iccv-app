@@ -12,7 +12,7 @@ Feito com Expo (SDK 58), Expo Router e TanStack Query, em TypeScript.
 ## Rodar
 
 ```bash
-npm install
+yarn install
 # o endereço da API; no celular físico, use o IP da máquina, não localhost
 cp .env.example .env   # o .env é de cada máquina e fica fora do Git
 npx expo start   # abra no Expo Go (QR no terminal) ou num simulador
@@ -20,7 +20,7 @@ npx expo start   # abra no Expo Go (QR no terminal) ou num simulador
 
 ## Prévia no navegador
 
-`npm run web` abre o app no navegador, para comparar o desenho com o site lado
+`yarn web` abre o app no navegador, para comparar o desenho com o site lado
 a lado (ver `docs/README.md`). Não é um alvo de publicação.
 
 ## Conferir antes de entregar
@@ -28,7 +28,7 @@ a lado (ver `docs/README.md`). Não é um alvo de publicação.
 ```bash
 npx tsc --noEmit     # tipos
 npx expo lint        # lint (inclui as regras do React Compiler)
-npm run verificar    # lógica pura: HTML, máscaras, datas, vagas, pagamento
+yarn verificar       # lógica pura: HTML, máscaras, datas, vagas, pagamento
 npx expo-doctor      # dependências e configuração
 ```
 

@@ -30,7 +30,7 @@ para quem (pessoa ou IA) for mexer no app.
   (`react-native-svg`, `src/components/degrade.tsx`) ou `MaskedView` em vez de
   simplificar o desenho. As diferenças de propósito ficam listadas em cada
   módulo (seção "Diferenças do site").
-- **Conferir o desenho lado a lado:** a prévia web do app (`npm run web`, com
+- **Conferir o desenho lado a lado:** a prévia web do app (`yarn web`, com
   `EXPO_PUBLIC_API_URL` apontando para a API) e o site (`vite` no `ic-front`),
   os dois na mesma API, numa janela de 390 px, no claro e no escuro. A prévia
   web serve só para isso: o token vai para o `localStorage` e o nome em
@@ -42,7 +42,7 @@ para quem (pessoa ou IA) for mexer no app.
   `Aviso`.
 - **Texto vazio no JSX:** no React Native, `{texto && <X/>}` com `texto === ''`
   derruba a tela. Para valor que pode ser texto, usar `{!!texto && <X/>}`.
-- **Conferência:** `npm run verificar` (`scripts/verificar.mts`) roda as regras
+- **Conferência:** `yarn verificar` (`scripts/verificar.mts`) roda as regras
   puras de `src/lib` em Node, sem simulador.
 
 ## Onde está cada coisa

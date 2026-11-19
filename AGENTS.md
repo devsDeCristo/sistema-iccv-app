@@ -46,4 +46,4 @@ Docs: https://docs.expo.dev/eas/index.md
 - **Não cria rotas no backend** (`../ic-backend`): consome só as que o site já usa. Se a API não dá algo, a tela se adapta e a limitação vai para `docs/`.
 - O backend recusa campo a mais no corpo (`forbidNonWhitelisted`): mande só os campos do DTO.
 - Toda mudança atualiza o `.md` do módulo em `docs/` (índice em `docs/README.md`).
-- Antes de entregar: `npx tsc --noEmit`, `npx expo lint`, `npm run verificar`.
+- Antes de entregar: `npx tsc --noEmit`, `npx expo lint`, `yarn verificar`.
