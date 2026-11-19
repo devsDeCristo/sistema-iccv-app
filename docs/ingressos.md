@@ -6,7 +6,7 @@ compras da loja (`productPurchases`), a situação do termo do menor e se a
 igreja cobra online (`modulePayment`). As datas vêm do catálogo (`GET
 /events`).
 
-## Minhas inscrições (`src/app/(app)/(abas)/inscricoes.tsx`)
+## Minhas inscrições (`src/app/(app)/(menu)/inscricoes.tsx`)
 
 O título "Minhas Inscrições" e, por ano do evento (o mais recente primeiro,
 "2026 · N inscrições"; evento fora do catálogo vai para "Sem data"), os

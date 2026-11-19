@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
-import { router, Stack } from 'expo-router';
+import { router } from 'expo-router';
 import { View } from 'react-native';
 
-import { Aviso, Botao, Cartao, Carregando, Chip, Falha, Secao, T, Tela, Vazio } from '@/components/ui';
+import { Aviso, Botao, Cartao, Carregando, Chip, Falha, Secao, T, Tela, TituloDaPagina, Vazio } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
 import { api } from '@/lib/api';
 import { data } from '@/lib/formato';
@@ -90,8 +90,8 @@ export default function Solicitacoes() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Solicitações' }} />
       <Tela aoAtualizar={() => lista.refetch()} atualizando={lista.isRefetching}>
+        <TituloDaPagina>Solicitações</TituloDaPagina>
         {podePedir ? (
           <Botao titulo="Nova solicitação" icone="add" onPress={() => router.push('/solicitacoes/nova')} />
         ) : (

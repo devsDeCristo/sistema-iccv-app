@@ -13,7 +13,7 @@ Regras de evento portadas do site em `src/lib/eventos.ts`; formatos de data em
 `src/lib/formato.ts` (`periodo`, `contagemRegressiva`, `jaAcabou`,
 `emAndamento`).
 
-## Início (`src/app/(app)/(abas)/index.tsx`)
+## Início (`src/app/(app)/(menu)/index.tsx`)
 
 O mesmo desenho e a mesma ordem da `/home` do site no celular:
 
@@ -52,17 +52,30 @@ Os vazios ("Nenhum ingresso ativo", "Nenhum evento com inscrições abertas")
 são os do site, com o ícone redondo tingido e a saída ("Ver todas as igrejas"
 ou "Ver minhas inscrições").
 
-## Eventos (`src/app/(app)/(abas)/eventos.tsx`)
+## Eventos (`src/app/(app)/(menu)/eventos.tsx`)
 
 Todos os eventos que não estão inativos, do mais novo ao mais antigo,
 agrupados por ano, com o mesmo cartaz e selos do Início.
 
-## Barra do topo (`src/components/barra-do-topo.tsx`)
+## Barra do topo e menu lateral
 
-A do site: cor chapada da marca (a primária `#1C0F4D` no claro, `#1E293B` no
-escuro), o fio claro embaixo, o logo branco e "**ICCV** Eventos" nas abas, e o
-título da tela nas telas por cima delas. O menu lateral do site vira as quatro
-abas embaixo.
+O desenho do site no celular (`src/app/(app)/(menu)/_layout.tsx`, com o
+`Drawer` do Expo Router):
+
+- **Barra do topo** (`src/components/barra-do-topo.tsx`): cor chapada da marca
+  (a primária `#1C0F4D` no claro, `#1E293B` no escuro) com o fio claro embaixo;
+  à esquerda o ☰, que abre o menu, e a marca "**ICCV** Eventos"; à direita a
+  pastilha de vidro com o sininho, a troca de tema (claro/escuro, guardada no
+  aparelho e aplicada por `Appearance.setColorScheme`, `src/lib/tema.ts`) e o
+  avatar, que abre o menu da conta: nome, e-mail, "Meu perfil" e "Sair". As
+  telas que abrem por cima (evento, ingresso, perfil…) usam a mesma barra, com
+  o título e a seta de voltar.
+- **Menu lateral** (`src/components/menu-lateral.tsx`): 260 px no fundo
+  `paper`, a marca no topo e a seção "INSCRIÇÕES" com Página Inicial, Minhas
+  Inscrições, Eventos e, para membro de igreja com o módulo, Solicitações e
+  Oportunidades ("NOVO!" em degradê). O item da tela aberta fica com fundo
+  esmaecido e texto na cor de destaque: a primária (no escuro, a variante
+  clara `#5182EF`) ou a do módulo, em Solicitações e Oportunidades.
 
 ## Página do evento (`src/app/(app)/evento/[id]/index.tsx`)
 

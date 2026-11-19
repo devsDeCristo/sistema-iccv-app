@@ -360,6 +360,12 @@ export function Falha({ erro, aoTentar }: { erro: unknown; aoTentar: () => void 
   );
 }
 
+/** O título de página do site (o `Header` no celular: 20px, peso 500) */
+export function TituloDaPagina({ children }: { children: string }) {
+  const cores = useTheme();
+  return <Text style={{ fontSize: 20, fontWeight: '500', lineHeight: 24, color: cores.text }}>{children}</Text>;
+}
+
 /** Título de seção, com a contagem opcional */
 export function Secao({ titulo, contagem }: { titulo: string; contagem?: number }) {
   return (

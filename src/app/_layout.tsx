@@ -1,14 +1,20 @@
 import { QueryClientProvider } from '@tanstack/react-query';
 import { DarkTheme, DefaultTheme, SplashScreen, Stack, ThemeProvider } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 
 import { useOpcoesDaBarra } from '@/components/barra-do-topo';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { queryClient, SessaoProvider, useSessao } from '@/lib/sessao';
+import { aplicarTemaSalvo } from '@/lib/tema';
 
 SplashScreen.preventAutoHideAsync();
 
 export default function Raiz() {
+  // o tema escolhido no botão da barra (claro/escuro) vale desde a abertura
+  useEffect(() => {
+    aplicarTemaSalvo();
+  }, []);
   const esquema = useColorScheme();
   return (
     <QueryClientProvider client={queryClient}>

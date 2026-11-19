@@ -1,11 +1,12 @@
 # Conta e módulos da igreja
 
-## Aba Mais (`src/app/(app)/(abas)/mais.tsx`)
+## Conta (barra do topo)
 
-Foto, nome, e-mail e "Membro da {igreja}". Itens: Meu perfil, Avisos,
-Solicitações (só membro de igreja com `REQUESTS` no plano), Oportunidades (só
-membro de igreja com `OPPORTUNITIES`), Termos de Uso e Sair (com confirmação).
-Os módulos vêm de `memberChurch.modulos` do `/auth/validate`.
+O avatar na barra do topo abre o menu da conta, como no site: foto ou
+iniciais, nome, e-mail, "Meu perfil" e "Sair" (com confirmação). Solicitações e
+Oportunidades ficam no menu lateral, só para membro de igreja com o módulo no
+plano (`memberChurch.modulos` do `/auth/validate`); ver
+[eventos-e-inscricao.md](eventos-e-inscricao.md#barra-do-topo-e-menu-lateral).
 
 ## Perfil (`src/app/(app)/perfil.tsx`)
 
@@ -22,9 +23,9 @@ Os módulos vêm de `memberChurch.modulos` do `/auth/validate`.
 - **Senha:** `POST /auth/password/change` `{currentPassword, password}` (8 a
   72, diferente da atual). Outras sessões não caem.
 
-## Avisos (`src/app/(app)/notificacoes.tsx`, sininho em `(abas)/_layout.tsx`)
+## Avisos (`src/app/(app)/notificacoes.tsx`, sininho em `src/components/barra-do-topo.tsx`)
 
-- Sininho no topo das abas: `GET /notificacoes/nao-lidas` a cada minuto.
+- Sininho na pastilha da barra do topo: `GET /notificacoes/nao-lidas` a cada minuto.
 - Lista: `GET /notificacoes` (os 30 mais recentes). Tocar marca aquele como
   lido (`POST /notificacoes/lidas` `{ids}`) e abre o assunto: evento →
   página do evento; notícia e resposta de membro → Início; resposta de
@@ -38,7 +39,7 @@ Os módulos vêm de `memberChurch.modulos` do `/auth/validate`.
 A notícia inteira (imagem, data, evento ou igreja, autor, título, chamada e o
 texto do editor), da mesma consulta do mural do Início (`GET /news?take=6`).
 
-## Solicitações (`src/app/(app)/solicitacoes/`)
+## Solicitações (`src/app/(app)/(menu)/solicitacoes.tsx` e `src/app/(app)/solicitacoes/nova.tsx`)
 
 - `GET /solicitacoes/minhas`: "Aguardando" (tudo que ainda não foi aceito ou
   recusado, inclusive aguardando pastor/tesouraria) e "Respondidos". Cartão
@@ -49,7 +50,7 @@ texto do editor), da mesma consulta do mural do Início (`GET /news?take=6`).
   quantidade de 1 a 999, link opcional só `http(s)`). `POST /solicitacoes`. A
   igreja é a de que a pessoa é membro; a API decide.
 
-## Oportunidades (`src/app/(app)/oportunidades.tsx`)
+## Oportunidades (`src/app/(app)/(menu)/oportunidades.tsx`)
 
 As vagas abertas da igreja (`GET /oportunidades`), com o aviso de que, ao
 demonstrar interesse, a igreja repassa nome, celular e e-mail a quem oferece a

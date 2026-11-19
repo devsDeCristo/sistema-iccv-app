@@ -1,8 +1,7 @@
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
 import { Alert, View } from 'react-native';
 
-import { Aviso, Botao, Cartao, Carregando, Falha, T, Tela, Vazio } from '@/components/ui';
+import { Aviso, Botao, Cartao, Carregando, Falha, T, Tela, TituloDaPagina, Vazio } from '@/components/ui';
 import { api } from '@/lib/api';
 import { data } from '@/lib/formato';
 import { queryClient, useUsuario } from '@/lib/sessao';
@@ -71,8 +70,8 @@ export default function Oportunidades() {
 
   return (
     <>
-      <Stack.Screen options={{ title: 'Oportunidades' }} />
       <Tela aoAtualizar={podeVer ? () => vagas.refetch() : undefined} atualizando={vagas.isRefetching}>
+        <TituloDaPagina>Oportunidades</TituloDaPagina>
         {corpo}
       </Tela>
     </>

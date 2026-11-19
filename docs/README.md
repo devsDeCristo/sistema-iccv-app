@@ -7,10 +7,10 @@ para quem (pessoa ou IA) for mexer no app.
 | Módulo | Telas | Arquivo |
 | --- | --- | --- |
 | Acesso (sessão, login, cadastro, senha, Termos de Uso) | `login`, `cadastro`, `esqueci-senha`, `termos`, portão dos termos | [acesso.md](acesso.md) |
-| Eventos e inscrição (início, eventos, página do evento, inscrição, loja, quadrante) | abas Início e Eventos, `evento/[id]/…` | [eventos-e-inscricao.md](eventos-e-inscricao.md) |
+| Eventos e inscrição (início, eventos, página do evento, inscrição, loja, quadrante) | Início e Eventos (menu lateral), `evento/[id]/…` | [eventos-e-inscricao.md](eventos-e-inscricao.md) |
 | Pagamentos (checkout hospedado e Pix do PayPal) | `evento/[id]/pix/[referenceId]` e o fluxo `pagar()` | [pagamentos.md](pagamentos.md) |
 | Ingressos (minhas inscrições, ingresso, termo do menor, certificado) | aba Inscrições, `ingresso/[eventId]` | [ingressos.md](ingressos.md) |
-| Conta e módulos da igreja (perfil, avisos, notícias, solicitações, oportunidades) | aba Mais, `perfil`, `notificacoes`, `noticia/[id]`, `solicitacoes`, `oportunidades` | [conta-e-modulos.md](conta-e-modulos.md) |
+| Conta e módulos da igreja (perfil, avisos, notícias, solicitações, oportunidades) | barra do topo e menu lateral, `perfil`, `notificacoes`, `noticia/[id]`, `solicitacoes`, `oportunidades` | [conta-e-modulos.md](conta-e-modulos.md) |
 
 ## Regras que valem em todo o app
 
@@ -48,7 +48,7 @@ para quem (pessoa ou IA) for mexer no app.
 ## Onde está cada coisa
 
 - `src/app/` — as telas (cada arquivo é uma rota do Expo Router).
-  - `(app)/` — área logada; `(app)/(abas)/` — as quatro abas.
+  - `(app)/` — área logada; `(app)/(menu)/` — as telas do menu lateral.
   - fora de `(app)/` — telas sem login (`login`, `cadastro`, `esqueci-senha`)
     e `termos` (pública).
 - `src/components/` — peças de tela compartilhadas (`ui.tsx` tem texto, botão,

@@ -9,7 +9,7 @@ import Svg, { Circle, Defs, Line, Pattern, RadialGradient, Rect, Stop } from 're
 import { AZUL_VIVO, VIOLETA_VIVO } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useTheme } from '@/hooks/use-theme';
-import { primeiroNome, saudacao } from '@/lib/formato';
+import { iniciais, primeiroNome, saudacao } from '@/lib/formato';
 
 import { Degrade, useIdDoSvg } from './degrade';
 
@@ -84,9 +84,6 @@ export function BoasVindas({ nomeCompleto, foto }: { nomeCompleto?: string; foto
   const escuro = useColorScheme() === 'dark';
   const corDoTom = escuro ? cores.primary : AZUL_VIVO;
   const nome = primeiroNome(nomeCompleto);
-  // como o `UserAvatar` do site: primeira letra do primeiro e do último nome
-  const partes = (nomeCompleto ?? '').trim().split(/\s+/).filter(Boolean);
-  const iniciais = ((partes[0]?.[0] ?? '') + (partes.length > 1 ? partes[partes.length - 1][0] : '')).toUpperCase();
 
   return (
     <View
@@ -127,7 +124,7 @@ export function BoasVindas({ nomeCompleto, foto }: { nomeCompleto?: string; foto
               {foto ? (
                 <Image source={{ uri: foto }} style={StyleSheet.absoluteFill} contentFit="cover" />
               ) : (
-                <Text style={{ color: '#fff', fontSize: 18 }}>{iniciais}</Text>
+                <Text style={{ color: '#fff', fontSize: 18 }}>{iniciais(nomeCompleto)}</Text>
               )}
             </View>
           </View>

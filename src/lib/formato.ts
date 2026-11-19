@@ -116,6 +116,12 @@ export const saudacao = () => {
   return h >= 5 && h < 12 ? 'Bom dia' : h >= 12 && h < 18 ? 'Boa tarde' : 'Boa noite';
 };
 
+/** As iniciais do avatar, como o `UserAvatar` do site: primeiro e último nome */
+export function iniciais(nome?: string | null) {
+  const partes = (nome ?? '').trim().split(/\s+/).filter(Boolean);
+  return ((partes[0]?.[0] ?? '') + (partes.length > 1 ? partes[partes.length - 1][0] : '')).toUpperCase();
+}
+
 export const primeiroNome = (nome?: string | null) => nome?.trim().split(/\s+/)[0] ?? '';
 
 // Máscaras: o campo mostra formatado e a API recebe só os dígitos

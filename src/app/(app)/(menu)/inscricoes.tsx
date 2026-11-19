@@ -1,7 +1,7 @@
 import { Text, View } from 'react-native';
 
 import { CartaoDoIngresso } from '@/components/cartao-do-ingresso';
-import { Carregando, Falha, Tela, Vazio } from '@/components/ui';
+import { Carregando, Falha, Tela, TituloDaPagina, Vazio } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
 import { useEventos, useInscricoes } from '@/lib/consultas';
 
@@ -35,7 +35,7 @@ export default function MinhasInscricoes() {
       }}
       atualizando={inscricoes.isRefetching}
     >
-      <Text style={{ fontSize: 20, fontWeight: '500', lineHeight: 24, color: cores.text }}>Minhas Inscrições</Text>
+      <TituloDaPagina>Minhas Inscrições</TituloDaPagina>
       {ordenadas.length === 0 && (
         <Vazio
           icone="confirmation-number"
