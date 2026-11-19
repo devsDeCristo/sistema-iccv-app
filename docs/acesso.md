@@ -18,6 +18,17 @@
 
 ## Login (`src/app/login.tsx`)
 
+O desenho é o do login do site no celular: a foto de fundo na tela inteira com
+o véu índigo da marca (`#1C0F4D`, de 50% a 92% de cima para baixo) e a luz
+morna no alto; a cruz fina, o versículo (Colossenses 3:23) e a referência; o
+cartão (branco no claro, `#1E293B` no escuro) com a marca "ICCV Eventos",
+"Bem-vindo de volta", os campos contornados do site
+(`src/components/campo-do-site.tsx`: rótulo que sobe para a borda, borda
+`divider`, fundo `background.input`, olho na senha), o botão "Entrar" cheio,
+"Esqueci minha senha", "Primeira vez aqui? Criar cadastro" e o aviso dos
+Termos de Uso; o copyright embaixo do cartão. Sem o "ou" e o botão do Google
+(ver "Diferenças do site").
+
 - `POST /auth/login` com `{ document: CPF só dígitos, password }`.
 - **404** (CPF sem cadastro): avisa e oferece "Criar conta", levando o CPF.
 - **401 com `captchaRequired`** (2 senhas erradas, se o servidor tiver o
