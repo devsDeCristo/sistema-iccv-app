@@ -42,5 +42,5 @@ example
 /ios
 /android
 
-# env local
-.env*.local
+# o .env é de cada máquina (o IP da API muda); o modelo é o .env.example
+.env
