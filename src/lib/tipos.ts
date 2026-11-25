@@ -170,6 +170,8 @@ export interface PixDoCheckout {
   providerLabel: string;
   eventName: string;
   amountCents: number | null;
+  /** quanto do valor é taxa de serviço repassada pela igreja (0 sem repasse) */
+  serviceFeeCents?: number;
   code: string;
   expiresAt: string;
   status: StatusDoPagamento;

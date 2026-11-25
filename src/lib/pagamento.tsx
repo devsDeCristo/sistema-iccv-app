@@ -67,9 +67,9 @@ export function PerguntaDePagamento() {
           <T v="secundario" style={{ textAlign: 'center' }}>
             O pagamento é processado pelo {label}.
           </T>
-          <T>• Pix: o código aparece aqui no app, e a confirmação sai na hora.</T>
+          <T>• Pix: pague pelo app do seu banco, com Pix Copia e Cola. A confirmação sai na hora.</T>
           <T>
-            • {outra}: você conclui o pagamento no site do {label}.
+            • {outra}: a confirmação sai assim que o pagamento for aprovado.
           </T>
           <Botao titulo="Pix" onPress={() => responder('PIX')} />
           <Botao titulo={outra} variante="contorno" onPress={() => responder('CREDIT_CARD')} />

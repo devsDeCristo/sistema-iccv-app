@@ -5,7 +5,7 @@ import { router, Stack, useLocalSearchParams } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { Alert, View } from 'react-native';
 
-import { Aviso, Botao, Cartao, Carregando, T, Tela, Vazio } from '@/components/ui';
+import { Aviso, Botao, Cartao, Carregando, Chip, T, Tela, Vazio } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
 import { api } from '@/lib/api';
 import { moeda } from '@/lib/formato';
@@ -120,6 +120,18 @@ export default function Pix() {
           </T>
           <T v="secundario">{p.eventName}</T>
           {p.amountCents !== null && <T v="titulo">{moeda(p.amountCents / 100)}</T>}
+          {!!p.serviceFeeCents && (
+            <Chip
+              // a taxa é fração do cobrado: taxa ÷ total dá o percentual configurado
+              texto={`inclui ${moeda(p.serviceFeeCents / 100)} de taxa de serviço${
+                p.amountCents
+                  ? ` (${String(Math.round((p.serviceFeeCents / p.amountCents) * 10000) / 100).replace('.', ',')}%)`
+                  : ''
+              }`}
+              cor={cores.chips.alert}
+              icone="receipt-long"
+            />
+          )}
         </Cartao>
 
         {situacao === 'aguardando' && (
