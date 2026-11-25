@@ -108,7 +108,7 @@ export async function pagar(opcoes: {
   const corpo = { roleRegistrationId: opcoes.roleIds ?? [], paymentIds: opcoes.paymentIds ?? [] };
 
   try {
-    let resposta = await api<{ link?: string; choice?: Escolha }>(caminho, {
+    let resposta = await api<{ link?: string; choice?: Escolha; paid?: boolean }>(caminho, {
       method: 'POST',
       body: corpo,
     });
@@ -116,6 +116,12 @@ export async function pagar(opcoes: {
       const metodo = await abrirPergunta?.(resposta.choice);
       if (!metodo) return false;
       resposta = await api(caminho, { method: 'POST', body: { ...corpo, method: metodo } });
+    }
+    // desconto de 100%: o servidor quitou sem abrir cobrança
+    if (resposta.paid) {
+      await recarregar(opcoes.eventId);
+      Alert.alert('Inscrição quitada', 'Desconto de 100%: não há nada a pagar.');
+      return true;
     }
     if (!resposta.link) return false;
 

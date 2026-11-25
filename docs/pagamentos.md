@@ -21,6 +21,10 @@ numa tela do app — o PayPal não hospeda o Pix. Regras do servidor em
      (`expo-web-browser`). Ao fechar, o app recarrega inscrições, grupos e
      evento — o gateway devolve a pessoa para uma URL do site, que o app não
      intercepta.
+
+   Com desconto de 100% (sem produto pago junto) vem `paid: true` e nenhum
+   link: o servidor já quitou. O app recarrega e avisa "Inscrição quitada —
+   Desconto de 100%: não há nada a pagar".
 4. **503**: "Esta igreja não recebe pagamento pelo site. O valor é combinado
    diretamente com a organização do evento." Outros erros: a mensagem do
    servidor.
