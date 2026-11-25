@@ -28,9 +28,10 @@ const situacaoDe = (pix: PixDoCheckout, agora: number): Situacao =>
             : 'aguardando';
 
 /**
- * O Pix do PayPal, pago dentro do app (a única exceção ao checkout
- * hospedado). Consulta a cada 5 s enquanto aguarda; "Já paguei" pede ao
- * servidor que confira no PayPal.
+ * O Pix pago dentro do app, com QR dinâmico criado na API do gateway (PayPal,
+ * Mercado Pago, PagBank, Ton) — as outras formas seguem no checkout
+ * hospedado. Consulta a cada 5 s enquanto aguarda; "Já paguei" pede ao
+ * servidor que confira no gateway.
  */
 export default function Pix() {
   const { id, referenceId } = useLocalSearchParams<{ id: string; referenceId: string }>();

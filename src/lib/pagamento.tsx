@@ -10,15 +10,20 @@ import { useTheme } from '@/hooks/use-theme';
 import { api, ErroDaApi } from './api';
 import { queryClient } from './sessao';
 
-type Escolha = { provider: string; label: string };
+/**
+ * `checkoutLabel`: o nome da outra saída, com o que a igreja ligou no checkout
+ * do gateway ("Cartão ou boleto", "Cartão ou conta PayPal"). Ausente em
+ * servidor antigo.
+ */
+type Escolha = { provider: string; label: string; checkoutLabel?: string };
 type Metodo = 'PIX' | 'CREDIT_CARD';
 
 export const AVISO_FORA_DO_SITE =
   'Esta igreja não recebe pagamento pelo site. O valor é combinado diretamente com a organização do evento.';
 
 /**
- * A pergunta "Como você quer pagar?" — só o PayPal pede (Pix no app, cartão
- * no site dele). Fica montada uma vez (`PerguntaDePagamento`) e o fluxo de
+ * A pergunta "Como você quer pagar?" — quando a igreja tem o Pix ligado e mais
+ * alguma forma: o Pix é pago no app, e o resto no site do gateway. Fica montada uma vez (`PerguntaDePagamento`) e o fluxo de
  * pagamento a chama como uma promessa.
  */
 let abrirPergunta: ((escolha: Escolha) => Promise<Metodo | null>) | null = null;
@@ -42,6 +47,7 @@ export function PerguntaDePagamento() {
     setPendente(null);
   };
   const label = pendente?.escolha.label ?? '';
+  const outra = pendente?.escolha.checkoutLabel ?? `Cartão ou conta ${label}`;
 
   return (
     <Modal transparent visible={!!pendente} animationType="fade" onRequestClose={() => responder(null)}>
@@ -62,9 +68,11 @@ export function PerguntaDePagamento() {
             O pagamento é processado pelo {label}.
           </T>
           <T>• Pix: o código aparece aqui no app, e a confirmação sai na hora.</T>
-          <T>• Cartão ou conta {label}: você conclui o pagamento no site do {label}.</T>
+          <T>
+            • {outra}: você conclui o pagamento no site do {label}.
+          </T>
           <Botao titulo="Pix" onPress={() => responder('PIX')} />
-          <Botao titulo={`Cartão ou conta ${label}`} variante="contorno" onPress={() => responder('CREDIT_CARD')} />
+          <Botao titulo={outra} variante="contorno" onPress={() => responder('CREDIT_CARD')} />
           <Botao titulo="Agora não" variante="texto" onPress={() => responder(null)} />
         </Pressable>
       </Pressable>
@@ -85,7 +93,8 @@ const recarregar = (eventId: string) =>
 /**
  * Cria a cobrança e manda a pessoa pagar: o checkout hospedado do gateway num
  * navegador dentro do app, ou — no Pix do PayPal — a tela de Pix do próprio
- * app (o link aponta para a tela web de Pix; o app reconhece e abre a sua).
+ * app (o link aponta para a tela web de Pix; o app reconhece e abre a sua) —
+ * vale para todo gateway com Pix na tela do sistema, não só o PayPal.
  *
  * Devolve `false` quando não houve cobrança (desistiu, fora do site, erro).
  */
