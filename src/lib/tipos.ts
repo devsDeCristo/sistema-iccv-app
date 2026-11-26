@@ -176,6 +176,8 @@ export interface PixDoCheckout {
   expiresAt: string;
   status: StatusDoPagamento;
   active: boolean;
+  /** Pix estático da igreja: nenhum gateway confirma, a baixa é manual */
+  manual?: boolean;
 }
 
 export interface Noticia {

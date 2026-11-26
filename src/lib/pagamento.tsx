@@ -15,7 +15,13 @@ import { queryClient } from './sessao';
  * do gateway ("Cartão ou boleto", "Cartão ou conta PayPal"). Ausente em
  * servidor antigo.
  */
-type Escolha = { provider: string; label: string; checkoutLabel?: string };
+type Escolha = {
+  provider: string;
+  label: string;
+  checkoutLabel?: string;
+  /** Pix estático da igreja: a organização confirma, não o gateway */
+  manualPix?: boolean;
+};
 type Metodo = 'PIX' | 'CREDIT_CARD';
 
 export const AVISO_FORA_DO_SITE =
@@ -67,7 +73,12 @@ export function PerguntaDePagamento() {
           <T v="secundario" style={{ textAlign: 'center' }}>
             O pagamento é processado pelo {label}.
           </T>
-          <T>• Pix: pague pelo app do seu banco, com Pix Copia e Cola. A confirmação sai na hora.</T>
+          <T>
+            • Pix: pague pelo app do seu banco, com Pix Copia e Cola.{' '}
+            {pendente?.escolha.manualPix
+              ? 'A organização do evento confere e confirma o pagamento.'
+              : 'A confirmação sai na hora.'}
+          </T>
           <T>
             • {outra}: a confirmação sai assim que o pagamento for aprovado.
           </T>

@@ -22,6 +22,12 @@ numa tela do app — o PayPal não hospeda o Pix. Regras do servidor em
      evento — o gateway devolve a pessoa para uma URL do site, que o app não
      intercepta.
 
+   Com **Pix estático** (o código fixo da igreja na configuração do PayPal), a
+   pergunta diz que a organização confere o Pix (`manualPix`), e a tela do Pix
+   (`manual`) troca o "Processado pelo PayPal" e mostra só o código e o copiar:
+   sem "Aguardando pagamento", contagem, "Já paguei" ou aviso. O código não
+   vence (é fixo); vira "confirmado" quando a organização dá a baixa.
+
    Com desconto de 100% (sem produto pago junto) vem `paid: true` e nenhum
    link: o servidor já quitou. O app recarrega e avisa "Inscrição quitada —
    Desconto de 100%: não há nada a pagar".

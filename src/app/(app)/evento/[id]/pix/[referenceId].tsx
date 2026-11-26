@@ -23,7 +23,8 @@ const situacaoDe = (pix: PixDoCheckout, agora: number): Situacao =>
         ? 'encerrado'
         : !pix.active
           ? 'substituido'
-          : new Date(pix.expiresAt).getTime() <= agora
+          : // Pix estático não vence: o código é fixo, e a baixa é de quem administra
+            !pix.manual && new Date(pix.expiresAt).getTime() <= agora
             ? 'expirado'
             : 'aguardando';
 
@@ -106,7 +107,8 @@ export default function Pix() {
       <Stack.Screen options={{ title: 'Pagamento com Pix' }} />
       <Tela>
         <Cartao style={{ alignItems: 'center' }}>
-          {p.provider === 'PAYPAL' && (
+          {/* Pix estático vai direto para a conta da igreja: o gateway não processa */}
+          {p.provider === 'PAYPAL' && !p.manual && (
             <Image
               source={require('@/assets/images/paypal.png')}
               style={{ width: 110, height: 36 }}
@@ -114,9 +116,13 @@ export default function Pix() {
               accessibilityLabel="PayPal"
             />
           )}
-          <T v="destaque">Processado pelo {p.providerLabel}</T>
+          <T v="destaque">
+            {p.manual ? 'Pix para a organização do evento' : `Processado pelo ${p.providerLabel}`}
+          </T>
           <T v="pequeno" style={{ textAlign: 'center' }}>
-            No app do seu banco, o recebedor pode aparecer com esse nome.
+            {p.manual
+              ? 'No app do seu banco, o recebedor aparece com o nome da conta da igreja.'
+              : 'No app do seu banco, o recebedor pode aparecer com esse nome.'}
           </T>
           <T v="secundario">{p.eventName}</T>
           {p.amountCents !== null && <T v="titulo">{moeda(p.amountCents / 100)}</T>}
@@ -147,13 +153,18 @@ export default function Pix() {
               icone={copiado ? 'check' : 'content-copy'}
               onPress={copiar}
             />
-            <View style={{ alignItems: 'center' }}>
-              <T v="destaque" style={{ color: cores.warning }}>
-                Aguardando pagamento
-              </T>
-              <T v="secundario">Expira em {restante}</T>
-            </View>
-            <Botao titulo="Já paguei" variante="contorno" carregando={conferir.isPending} onPress={() => conferir.mutate()} />
+            {/* Pix estático: sem prazo e sem confirmação automática, não há o que contar nem esperar */}
+            {!p.manual && (
+              <>
+                <View style={{ alignItems: 'center' }}>
+                  <T v="destaque" style={{ color: cores.warning }}>
+                    Aguardando pagamento
+                  </T>
+                  <T v="secundario">Expira em {restante}</T>
+                </View>
+                <Botao titulo="Já paguei" variante="contorno" carregando={conferir.isPending} onPress={() => conferir.mutate()} />
+              </>
+            )}
           </>
         )}
         {situacao === 'pago' && (
@@ -179,12 +190,16 @@ export default function Pix() {
         {(situacao === 'expirado' || situacao === 'substituido') && (
           <>
             <Aviso tipo="alerta">
-              {situacao === 'expirado'
-                ? 'Este código expirou. Gere um novo em Minhas inscrições › Pagar.'
-                : 'Este código foi substituído por um pagamento mais novo. Use o de Minhas inscrições › Pagar.'}
+              {p.manual
+                ? 'Este código foi substituído por um pagamento mais novo. Use o de Minhas inscrições › Pagar.'
+                : situacao === 'expirado'
+                  ? 'Este código expirou. Gere um novo em Minhas inscrições › Pagar.'
+                  : 'Este código foi substituído por um pagamento mais novo. Use o de Minhas inscrições › Pagar.'}
             </Aviso>
             <Botao titulo="Ir para Minhas inscrições" onPress={irParaInscricoes} />
-            <Botao titulo="Já paguei" variante="contorno" carregando={conferir.isPending} onPress={() => conferir.mutate()} />
+            {!p.manual && (
+              <Botao titulo="Já paguei" variante="contorno" carregando={conferir.isPending} onPress={() => conferir.mutate()} />
+            )}
           </>
         )}
       </Tela>
